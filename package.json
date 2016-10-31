@@ -1,0 +1,28 @@
+{
+  "name": "standapp",
+  "version": "0.0.1",
+  "description": "Browser extension/bookmarklet easier standups using JIRA's scrum board.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "browser",
+    "extension",
+    "bookmarklet",
+    "jira",
+    "scrum",
+    "standup"
+  ],
+  "author": "Jon Caveman",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "broccoli": "^0.16.9",
+    "broccoli-concat": "^3.0.5",
+    "broccoli-jshint": "^2.1.0",
+    "broccoli-merge-trees": "^1.1.4",
+    "broccoli-sass": "^0.7.0",
+    "broccoli-uglify-js": "^0.2.0"
+  }
+}
