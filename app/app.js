@@ -1,8 +1,8 @@
-(function(d, w) {
-  w.STANDAPP = w.STANDAPP || {};
-
+window.STANDAPP = window.STANDAPP || {};
+(function(APP, d, w) {
   var styleEl,
       overlayEl,
+      superTrooperEl,
       modalEl,
       header,
       currentMemberNameEl,
@@ -16,7 +16,7 @@
       leftPanel,
       standbyOverlay;
 
-      styleEl = d.querySelector('#' + STANDAPP.STYLES_ID) || injectStyles(styles);
+      styleEl = d.querySelector('#' + APP.STYLES_ID) || injectStyles(styles);
 
       Element.prototype.show = function (delay) {
         var self = this;
@@ -71,7 +71,7 @@
       }
 
       function injectStyles(styles) {
-        styleEl = d.createElement('style', '', STANDAPP.STYLES_ID);
+        styleEl = d.createElement('style', '', APP.STYLES_ID);
         styleEl.type = 'text/css';
         styleEl.innerHTML = styles;
         d.getElementsByTagName('head')[0].appendChild(styleEl);
@@ -82,7 +82,7 @@
 
         result.toggleShuffleWrapEl = createElement('div', 'toggle-shuffle-wrap');
         result.toggleShuffleWrapEl.innerHTML = [
-          '<input type="checkbox" id="toggle-shuffle" name="toggle-shuffle" checked />',
+          '<input type="checkbox" id="toggle-shuffle" name="toggle-shuffle" />',
           '<label for="toggle-shuffle">',
             '<i class="check">&#10004</i> Shuffle',
           '</label>'
@@ -102,6 +102,7 @@
           var li = createElement('li', 'member' + activeClass);
           var member = memberEl.querySelector('.ghx-heading').cloneNode(true);
           li.board = memberEl.cloneNode(true);
+          // li.board = memberEl;
           li.appendChild(member);
           members.appendChild(li);
         });
@@ -160,17 +161,21 @@
         standbyOverlay = createElement('div', 'standby-overlay');
         standbyOverlay.innerHTML = [
           '<h2 class="headline">Paused</h2>',
-          '<h3 class="subheadline"><img src="' + STANDAPP.images.iconSpaceSrc + '" alt="space" /> to start</h3>',
-          '<h3 class="subheadline"><img src="' + STANDAPP.images.iconArrowRightSrc + '" alt="space" /> for next person</h3>',
-          '<h3 class="subheadline"><img src="' + STANDAPP.images.iconArrowLeftSrc + '" alt="space" /> for previous person</h3>',
+          '<h3 class="subheadline"><img src="' + APP.images.iconSpaceSrc + '" alt="space" /> to start</h3>',
+          '<h3 class="subheadline"><img src="' + APP.images.iconArrowRightSrc + '" alt="space" /> for next person</h3>',
+          '<h3 class="subheadline"><img src="' + APP.images.iconArrowLeftSrc + '" alt="space" /> for previous person</h3>',
           '</h3>',
         ].join('');
         return standbyOverlay;
       }
 
       function resetTimer() {
-        timerEl = d.querySelector('#' + STANDAPP.NAMESPACE + ' .modal .main .control-panel .timer');
-        timerToggleEl = d.querySelector('#' + STANDAPP.NAMESPACE + ' .modal .main .control-panel .timer-toggle');
+        timerEl.classList.remove('alert');
+        overlayEl.classList.remove('overtime');
+        superTrooperEl.classList.remove('show');
+
+        timerEl = d.querySelector('#' + APP.NAMESPACE + ' .modal .main .control-panel .timer');
+        timerToggleEl = d.querySelector('#' + APP.NAMESPACE + ' .modal .main .control-panel .timer-toggle');
 
         timerEl.setAttribute('data-seconds', '0');
         timerEl.innerHTML = '00:00';
@@ -188,7 +193,7 @@
       }
 
       function shuffleToggle() {
-        mainWrapEl = d.querySelector('#' + STANDAPP.NAMESPACE + ' .modal .main.wrap');
+        mainWrapEl = d.querySelector('#' + APP.NAMESPACE + ' .modal .main.wrap');
         var members = d.querySelectorAll('#ghx-work .ghx-swimlane');
         var shuffledMembers = shuffle(makeArray(members));
         var newMemberListEL = getMemberList(shuffledMembers);
@@ -209,6 +214,19 @@
             var current = parseInt(timerEl.getAttribute('data-seconds'));
             timerEl.setAttribute('data-seconds', current + 1);
             timerEl.innerHTML = formatTime(current + 1);
+
+            if (current > (APP.options.timerLimitSeconds - 11)) {
+              timerEl.classList.add('alert');
+            }
+
+            if (current >= APP.options.timerLimitSeconds) {
+              overlayEl.classList.add('overtime');
+            }
+
+            if (current >= (APP.options.timerLimitSeconds + 9)) {
+              superTrooperEl.classList.add('show');
+            }
+
           }, 1000);
 
           timerToggleEl.setAttribute('data-state', 'pause');
@@ -263,7 +281,12 @@
         return controls;
       }
 
-      overlayEl = createElement('div', '', STANDAPP.NAMESPACE);
+      overlayEl = createElement('div', '', APP.NAMESPACE);
+
+      superTrooperEl = createElement('img', '', 'superTrooper');
+      superTrooperEl.src = APP.images.superTrooper;
+      overlayEl.appendChild(superTrooperEl);
+
       boardParts = getBoardParts();
       modalEl = createElement('div', 'modal standby');
       mainWrapEl = createElement('div', 'main wrap');
@@ -302,4 +325,4 @@
         }
       };
 
-    })(document, window);
+    })(window.STANDAPP, document, window);

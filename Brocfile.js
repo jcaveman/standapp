@@ -16,7 +16,7 @@ var JSHinter = require('broccoli-jshint'),
 * the build production folder
 */
 appJs = concatenate(app, {
-  headerFiles: ['config.js', 'styles.js', 'templates.js'],
+  headerFiles: ['config.js', 'images.js', 'styles.js', 'templates.js'],
   inputFiles : ['**/*.js'],
   outputFile : '/app.js',
 });

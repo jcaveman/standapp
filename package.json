@@ -4,7 +4,12 @@
   "description": "Browser extension/bookmarklet easier standups using JIRA's scrum board.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./scripts/build.sh",
+    "watch": "npm-scripts-watcher"
+  },
+  "watch": {
+    "app/*": ["build"]
   },
   "keywords": [
     "browser",
@@ -23,6 +28,7 @@
     "broccoli-jshint": "^2.1.0",
     "broccoli-merge-trees": "^1.1.4",
     "broccoli-sass": "^0.7.0",
-    "broccoli-uglify-js": "^0.2.0"
+    "broccoli-uglify-js": "^0.2.0",
+    "npm-scripts-watcher": "^1.0.2"
   }
 }
