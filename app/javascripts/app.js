@@ -22,6 +22,7 @@
     this.images    = tmp.images;
     this.templates = tmp.templates();
     this.els       = {};
+    this.started   = false;
   }
 
   App.prototype.loadStyles = function() {
@@ -178,6 +179,7 @@
   App.prototype.keyupDelegator = function(e) {
     switch(true) {
       case e.keyCode === 32:
+        this.started = true;
         if (!this.activeMemberIndex) {
           this.loadMemberBoard(this.els.members[0]);
         }
@@ -185,13 +187,17 @@
         break;
       case e.keyCode === 39:
       case e.keyCode === 40:
-        this.loadMemberBoard(this.getMember('next'));
-        this.resetTimer();
+        if (this.started) {
+          this.loadMemberBoard(this.getMember('next'));
+          this.resetTimer();
+        }
         break;
       case e.keyCode === 37:
       case e.keyCode === 38:
-        this.loadMemberBoard(this.getMember('previous'));
-        this.resetTimer();
+        if (this.started) {
+          this.loadMemberBoard(this.getMember('previous'));
+          this.resetTimer();
+        }
         break;
       default: //do nothing;
     }
@@ -200,7 +206,6 @@
   App.prototype.toggleShuffle = function() {
     if (this.els.toggleShuffle.checked) {
       this.els.members = this.helpers.shuffle(this.helpers.makeArray(this.els.members));
-      console.log('shuffled members: ', this.els.members);
     } else {
       this.els.members = this.helpers.makeArray(this.els.originalMembers);
     }
