@@ -1,7 +1,7 @@
 window.STANDAPP = window.STANDAPP || {};
 (function(APP, d, w) {
   APP.options = {
-    timerLimitSeconds: 20
+    timerLimitSeconds: 30
   };
 
   APP.STYLES_ID = 'standappStyles';

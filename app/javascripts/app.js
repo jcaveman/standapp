@@ -54,7 +54,9 @@
     members.forEach(function(memberEl) {
       let li = this.helpers.createElement('li', 'member');
       li.setAttribute('data-swimlane-id', memberEl.getAttribute('swimlane-id'));
-      li.board = memberEl;
+      // TODO: cloneNode disables draggable. Need to make draggable work
+      // li.board = memberEl;
+      li.board = memberEl.cloneNode(true);
       li.innerHTML = this.templates.member({
         name: memberEl.querySelector('.ghx-heading span[role="button"]').innerText,
         description: memberEl.querySelector('.ghx-heading .ghx-description').innerText
