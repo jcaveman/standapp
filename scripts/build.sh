@@ -1,3 +1,5 @@
 #!/bin/bash
-rm -rf prod
-broccoli build prod
+rm -rf build
+node ./scripts/precompile-hbs.js
+broccoli build build
+rm tmp/*

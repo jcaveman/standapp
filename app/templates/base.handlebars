@@ -1,0 +1,49 @@
+<div class="modal standby">
+
+  <div class="header">
+    <div class="master-timer" data-seconds="0" data-state="off">00:00</div>
+    <h1 id="currentMember" class="hide">
+      It's your turn <strong class="name"></strong>
+    </h1>
+    <div class="timer" data-seconds="0" data-state="off">00:00</div>
+  </div>
+
+  <div class="main wrap">
+    <ul class="left-panel members">
+
+      <!-- .members goes here -->
+
+    </ul>
+
+    <section class="main-board">
+      <!-- #ghx-column-headers go here -->
+
+      <div class="pause-overlay">
+        <h2 class="headline">Paused</h2>
+        <h3 class="subheadline">
+          <img src="{{iconSpace}}" alt="space"> start/pause
+        </h3>
+        <h3 class="subheadline">
+          <img src="{{iconArrowRight}}" alt="right-arrow"> next person
+        </h3>
+        <h3 class="subheadline">
+          <img src="{{iconArrowLeft}}" alt="left-arrow"> previous person
+        </h3>
+      </div>
+
+      <div class="finished-overlay">
+        <img src="{{doge}}" alt="Finished."/>
+      </div>
+
+      <!-- .ghx-swimlane (board) goes here -->
+
+    </section>
+  </div>
+
+  <div class="toggle-shuffle-wrap">
+    <input type="checkbox" id="toggle-shuffle" name="toggle-shuffle" checked>
+    <label for="toggle-shuffle"><i class="check">✔</i> Shuffle</label>
+  </div>
+
+</div>
+<img id="superTrooper" src="{{superTrooper}}"/>

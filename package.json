@@ -2,14 +2,20 @@
   "name": "standapp",
   "version": "0.0.1",
   "description": "Browser extension/bookmarklet easier standups using JIRA's scrum board.",
-  "main": "index.js",
+  "main": "standapp.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jcaveman/standapp.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./scripts/build.sh",
     "watch": "npm-scripts-watcher"
   },
   "watch": {
-    "app/*": ["build"]
+    "app/*": [
+      "build"
+    ]
   },
   "keywords": [
     "browser",
@@ -17,18 +23,28 @@
     "bookmarklet",
     "jira",
     "scrum",
-    "standup"
+    "standup",
+    "standapp"
   ],
   "author": "Jon Caveman",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "broccoli-funnel": "^1.0.9",
+    "broccoli-handlebars-precompiler": "^0.1.3",
+    "config": "^1.24.0",
+    "handlebars": "2.0.0"
+  },
   "devDependencies": {
+    "babel-preset-es2015": "^6.18.0",
     "broccoli": "^0.16.9",
+    "broccoli-babel-transpiler": "^5.6.1",
     "broccoli-concat": "^3.0.5",
     "broccoli-jshint": "^2.1.0",
     "broccoli-merge-trees": "^1.1.4",
     "broccoli-sass": "^0.7.0",
+    "broccoli-template": "^0.1.1",
     "broccoli-uglify-js": "^0.2.0",
+    "handlebars-precompiler": "^2.1.0",
     "npm-scripts-watcher": "^1.0.2"
   }
 }

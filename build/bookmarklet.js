@@ -1,0 +1,1 @@
+!function(n){var o=n.createElement("script");n.body.appendChild(o),o.onload=function(){STANDAPP.init()},o.src="//localhost:4443/build/standapp.min.js?nocache="+Date.now()}(document);

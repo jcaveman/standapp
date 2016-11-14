@@ -1,0 +1,5 @@
+{
+  "namespace": "standapp",
+  "globalAppObjectName": "window.STANDAPP",
+  "timerLimitSeconds": 20
+}
