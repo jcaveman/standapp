@@ -7,31 +7,34 @@
         return window.STANDAPP;
       }
 
-      let app = window.STANDAPP = new App();
-      app.initialize();
+      var app = window.STANDAPP = new App();
+      app.loadMenu();
+      console.log('boom');
     }
   };
 
   function App() {
-    let tmp = window.STANDAPP;
+    var tmp = window.STANDAPP;
     this.helpers   = tmp.helpers;
     this.NAMESPACE = tmp.NAMESPACE;
     this.options   = tmp.options;
-    this.STYLES_ID = tmp.STYLES_ID;
-    this.styles    = tmp.styles;
     this.images    = tmp.images;
     this.templates = tmp.templates();
     this.els       = {};
     this.started   = false;
   }
 
-  App.prototype.loadStyles = function() {
-    this.styleEl = this.helpers.injectStyles(this.styles);
+  App.prototype.loadMenu = function() {
+    this.els.menu = this.helpers.createElement('div', '', this.NAMESPACE + '_menu');
+    this.els.menu.innerHTML = this.templates.menu();
+    this.els.menu.openButton = this.els.menu.querySelector('.btn-open');
+    this.els.menu.openButton.addEventListener('click', App.prototype.initialize.bind(this));
+    document.body.appendChild(this.els.menu);
   };
 
   App.prototype.loadBaseTemplate = function() {
-    let els             = this.els;
-    let appEl = els.app = this.helpers.createElement('div', '', this.NAMESPACE);
+    var els             = this.els;
+    var appEl = els.app = this.helpers.createElement('div', '', this.NAMESPACE);
 
     appEl.innerHTML      = this.templates.base(this.images);
     els.modal            = appEl.querySelector('.modal');
@@ -48,11 +51,11 @@
   };
 
   App.prototype.loadMemberList = function() {
-    let members = document.querySelectorAll('#ghx-work .ghx-swimlane');
+    var members = document.querySelectorAll('#ghx-work .ghx-swimlane');
     this.els.members = [];
 
     members.forEach(function(memberEl) {
-      let li = this.helpers.createElement('li', 'member');
+      var li = this.helpers.createElement('li', 'member');
       li.setAttribute('data-swimlane-id', memberEl.getAttribute('swimlane-id'));
       // TODO: cloneNode disables draggable. Need to make draggable work
       // li.board = memberEl;
@@ -97,7 +100,7 @@
 
     if (!this.masterInterval) {
       this.masterInterval = setInterval(function() {
-        let current = parseInt(this.els.masterTimer.getAttribute('data-seconds'));
+        var current = parseInt(this.els.masterTimer.getAttribute('data-seconds'));
         this.els.masterTimer.setAttribute('data-seconds', current + 1);
         this.els.masterTimer.innerHTML = this.formatTime(current + 1);
       }.bind(this), 1000);
@@ -105,7 +108,7 @@
 
     clearInterval(this.timerInterval);
     this.timerInterval = setInterval(function() {
-      let current = parseInt(this.els.timer.getAttribute('data-seconds'));
+      var current = parseInt(this.els.timer.getAttribute('data-seconds'));
       this.els.timer.setAttribute('data-seconds', current + 1);
       this.els.timer.innerHTML = this.formatTime(current + 1);
 
@@ -176,12 +179,14 @@
     clearInterval(this.masterInterval);
     this.resetBoard();
     this.els.app.classList.add('finished');
+    document.body.onkeyup = null;
   };
 
   App.prototype.keyupDelegator = function(e) {
     switch(true) {
       case e.keyCode === 32:
         this.started = true;
+        this.disableShuffle();
         if (!this.activeMemberIndex) {
           this.loadMemberBoard(this.els.members[0]);
         }
@@ -213,13 +218,19 @@
     }
   };
 
+  App.prototype.disableShuffle = function() {
+    document.querySelector('.toggle-shuffle-wrap').classList.add('disabled');
+    this.els.toggleShuffle.setAttribute('disabled', 'disabled');
+    this.els.toggleShuffle.removeEventListener('change', this.toggleShuffle.bind(this));
+  };
+
   App.prototype.bindEvents = function() {
     document.body.onkeyup = this.keyupDelegator.bind(this);
     this.els.toggleShuffle.addEventListener('change', this.toggleShuffle.bind(this));
   };
 
   App.prototype.initialize = function() {
-    this.loadStyles();
+    this.els.menu.remove();
     this.loadBaseTemplate();
     this.loadMemberList();
     this.toggleShuffle();
@@ -229,4 +240,5 @@
 
     this.els.app.show();
   };
+
 })(document, window);

@@ -5,6 +5,7 @@ var Funnel = require('broccoli-funnel'),
     uglifyJs    = require('broccoli-uglify-js'),
     mergeTrees  = require('broccoli-merge-trees'),
     app,
+    appMin,
     scaffold;
 
 app = new Funnel('./', {
@@ -16,18 +17,23 @@ scaffold = new Funnel('app/scaffold', {
 });
 
 app = concatenate(app, {
+  outputFile: 'standapp.js',
+  sourceMapConfig: { enabled: false }
+});
+
+appMin = concatenate(app, {
   outputFile: 'standapp.min.js',
   sourceMapConfig: { enabled: false }
 });
 
-// app = uglifyJs(app, {
-//   compress: false,
-//   mangle: false
-// });
-//
+appMin = uglifyJs(appMin, {
+  compress: true,
+  mangle: true
+});
+
 scaffold = uglifyJs(scaffold, {
   compress: true,
   mangle: true
 });
 
-module.exports = mergeTrees([scaffold, app]);
+module.exports = mergeTrees([scaffold, app, appMin]);

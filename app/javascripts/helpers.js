@@ -48,14 +48,14 @@ window.STANDAPP = window.STANDAPP || {};
     },
 
     createElement: function(tagname, className, id) {
-      let el = d.createElement(tagname);
+      var el = d.createElement(tagname);
       if (id) { el.id = id; }
       el.className = className;
       return el;
     },
 
     injectStyles: function (styles) {
-      let styleEl = d.createElement('style', '', APP.STYLES_ID);
+      var styleEl = d.createElement('style', '', APP.STYLES_ID);
       styleEl.type = 'text/css';
       styleEl.innerHTML = styles;
       return d.getElementsByTagName('head')[0].appendChild(styleEl);

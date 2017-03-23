@@ -21,7 +21,7 @@ fs.readFile(precompiledFilePath, 'utf8', function (err, data) {
                               config.get('globalAppObjectName'),
                               '.templates = function() {',
                               data,
-                              ' return Handlebars.templates;}'
+                              ' return Handlebars.templates;}; window.STANDAPP.init();'
                             ].join('');
 
   fs.writeFile(compiledFilePath, wrappedFileContents, function(err) {
