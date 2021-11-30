@@ -61,7 +61,7 @@
       // li.board = memberEl;
       li.board = memberEl.cloneNode(true);
       li.innerHTML = this.templates.member({
-        name: memberEl.querySelector('.ghx-heading span[role="button"]').innerText,
+        name: memberEl.querySelector('.ghx-heading span:first-of-type').innerText,
         description: memberEl.querySelector('.ghx-heading .ghx-description').innerText
       });
 
